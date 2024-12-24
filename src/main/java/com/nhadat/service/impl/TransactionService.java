@@ -51,4 +51,8 @@ public class TransactionService implements ITransactionService {
     public Optional<Transaction> findByMaGiaoDich(String maGiaoDich) {
         return tp.findByMaGiaoDich(maGiaoDich);
     }
+
+    public void delete(Transaction transaction) {
+        tp.delete(transaction);
+    }
 }

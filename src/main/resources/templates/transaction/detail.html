@@ -3,24 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Chi tiết giao dịch</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<h2>Chi tiết giao dịch</h2>
+<div class="container mt-5">
+    <h2>Chi tiết giao dịch</h2>
 
-<div>
-    <p><strong>Mã giao dịch:</strong> <span th:text="${transaction.maGiaoDich}"></span></p>
-    <p><strong>Loại dịch vụ:</strong> <span th:text="${transaction.loaiDichVu}"></span></p>
-    <p><strong>Ngày giao dịch:</strong> <span th:text="${transaction.ngayGiaoDich}"></span></p>
-    <p><strong>Đơn giá:</strong> <span th:text="${transaction.donGia}"></span> VND/m²</p>
-    <p><strong>Diện tích:</strong> <span th:text="${transaction.dienTich}"></span> m²</p>
-    <p><strong>Tên khách hàng:</strong> <span th:text="${transaction.customer.tenKhachHang}"></span></p>
-    <p><strong>Số điện thoại:</strong> <span th:text="${transaction.customer.soDienThoai}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${transaction.customer.email}"></span></p>
+
+    <div th:if="${message}">
+        <div class="alert alert-danger" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+    </div>
+
+
+    <div th:if="${transaction}">
+        <table class="table table-bordered">
+            <tr>
+                <th>Loại dịch vụ:</th>
+                <td><span th:text="${transaction.loaiDichVu}"></span></td>
+            </tr>
+            <tr>
+                <th>Ngày giao dịch:</th>
+                <td><span th:text="${transaction.ngayGiaoDich}"></span></td>
+            </tr>
+            <tr>
+                <th>Đơn giá (VND/m²):</th>
+                <td><span th:text="${transaction.donGia}"></span> VND/m²</td>
+            </tr>
+            <tr>
+                <th>Diện tích (m²):</th>
+                <td><span th:text="${transaction.dienTich}"></span> m²</td>
+            </tr>
+            <tr>
+                <th>Tên khách hàng:</th>
+                <td><span th:text="${transaction.customer.tenKhachHang}"></span></td>
+            </tr>
+            <tr>
+                <th>Số điện thoại:</th>
+                <td><span th:text="${transaction.customer.soDienThoai}"></span></td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td><span th:text="${transaction.customer.email}"></span></td>
+            </tr>
+        </table>
+    </div>
+
+    <a th:href="@{/transactions/delete/{maGiaoDich}(maGiaoDich=${transaction.maGiaoDich})}" onclick="return confirm('Bạn có chắc chắn muốn xóa giao dịch này?');">Xóa</a>
+
+    <a class="btn btn-primary" href="/transactions/list">Quay lại danh sách</a>
+
 </div>
 
 
-<button><a href="/transactions/list">Quay lại danh sách</a></button>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

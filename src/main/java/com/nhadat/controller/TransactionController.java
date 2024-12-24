@@ -6,10 +6,12 @@ import com.nhadat.service.ICustomerService;
 import com.nhadat.service.impl.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -59,33 +61,24 @@ public class TransactionController {
         return "transaction/list";
     }
 
-    @GetMapping("/{id}")
-    public String showTransactionDetails(@PathVariable("id") Long maGiaoDich, Model model) {
-        Optional<Transaction> transaction = transactionService.findById(maGiaoDich);
-        model.addAttribute("transaction", transaction);
-        return "transaction/detail";
-    }
-
     @GetMapping("/list")
     public String listTransactions(Model model) {
         model.addAttribute("transactions", transactionService.getAllTransactions());
         return "transaction/list";
     }
 
-    @GetMapping("/transactions/detail/{maGiaoDich}")
+    @GetMapping("/detail/{maGiaoDich}")
     public String viewTransactionDetails(@PathVariable("maGiaoDich") String maGiaoDich, Model model) {
         Optional<Transaction> transaction = transactionService.findByMaGiaoDich(maGiaoDich);
-        if (transaction.isPresent()) {
-            model.addAttribute("transaction", transaction.get());
-        } else {
-            model.addAttribute("message", "Giao dịch không tồn tại");
-        }
+        model.addAttribute("transaction", transaction.get());
         return "transaction/detail";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteTransaction(@PathVariable Long id) {
-        transactionService.remove(id);
+
+    @GetMapping("/delete/{maGiaoDich}")
+    public String deleteTransaction(@PathVariable ("maGiaoDich") String maGiaoDich, Model model){
+        Optional<Transaction> transaction = transactionService.findByMaGiaoDich(maGiaoDich);
+        transactionService.delete(transaction.get());
         return "redirect:/transactions/list";
     }
 }
