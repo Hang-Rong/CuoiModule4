@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Mới Giao Dịch</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 70%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Thêm Mới Giao Dịch</h2>
+
+    <form action="#" th:action="@{/transactions/new}" th:object="${transaction}" method="post">
+
+        <div class="form-group">
+            <label for="maGiaoDich">Mã giao dịch:</label>
+            <input type="text" th:field="*{maGiaoDich}" id="maGiaoDich" class="form-control" placeholder="MGD-XXXX" required />
+            <div th:if="${#fields.hasErrors('maGiaoDich')}" th:errors="*{maGiaoDich}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="customer">Tên khách hàng:</label>
+            <select th:field="*{customer}" id="customer" class="form-control">
+                <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.tenKhachHang}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="loaiDichVu">Loại dịch vụ:</label>
+            <select th:field="*{loaiDichVu}" id="loaiDichVu" class="form-control">
+                <option value="Đất">Đất</option>
+                <option value="Nhà và đất">Nhà và đất</option>
+            </select>
+            <div th:if="${#fields.hasErrors('loaiDichVu')}" th:errors="*{loaiDichVu}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="ngayGiaoDich">Ngày giao dịch:</label>
+            <input type="date" th:field="*{ngayGiaoDich}" id="ngayGiaoDich" class="form-control" required />
+            <div th:if="${#fields.hasErrors('ngayGiaoDich')}" th:errors="*{ngayGiaoDich}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="donGia">Đơn giá (VND/m²):</label>
+            <input type="number" th:field="*{donGia}" id="donGia" class="form-control" required min="500000" />
+            <div th:if="${#fields.hasErrors('donGia')}" th:errors="*{donGia}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="dienTich">Diện tích (m²):</label>
+            <input type="number" th:field="*{dienTich}" id="dienTich" class="form-control" required min="20" />
+            <div th:if="${#fields.hasErrors('dienTich')}" th:errors="*{dienTich}" class="text-danger"></div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg btn-block">Thêm mới</button>
+    </form>
+
+    <br>
+    <a href="/transactions/list" class="btn btn-secondary">Trở về</a>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
